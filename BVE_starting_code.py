@@ -161,3 +161,32 @@ Zout[0,:,:]  = Z0      #  Copy initial height field
 #################################################
 #################################################
 ######## Start of the time-stepping loop  #######
+
+# step 0
+
+# TODO linear extrapolation of boundary
+
+L0[0,1:-1,1:-1] = make_Laplacian(Zout[0,:,:])
+J = make_Jacobian(Zout[0,:,:],L0[0,:,:])
+
+# Euler
+L0[1,:,:] = L0[0,:,:] + (J *Dt)
+Zout[1,:,:] = Zout[0,:,:]
+Zout[1,1:-1,1:-1] = Poisson_solver(J)
+
+# step n > 0
+
+for i in range(1,nt):
+  L0[i,1:-1,1:-1] = make_Laplacian(Zout[i-1,:,:])
+  J = make_Jacobian(Zout[1,:,:],L0[1,:,:])
+  # Leapfrog
+  L0[i+1,:,:] = L0[i-1,:,:] + (J * Dt*2)
+  Zout[i+1,:,:] = Zout[i,:,:]
+  Zout[i+1,1:-1,1:-1] = Poisson_solver(J)
+
+fig, ax = plt.subplots(nrows=1)
+
+ax.contour(X, Y, Zout[0,:,:], levels=14, linewidths=0.5, colors='k')
+cntr1 = ax.contourf(X, Y, Zout[-1,:,:], levels=14, cmap="RdBu_r")
+
+plt.savefig("contour.png")
