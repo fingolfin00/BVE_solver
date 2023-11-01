@@ -143,8 +143,8 @@ L0=np.zeros([nt+1,M,N])
 ###################################################
 ###   Read and plot the initial and verification height data
 ## Input files
-File1 = 'Case1-1949010503.Z00' #The initial value 
-File2 = 'Case1-1949010603.Z00' #The final value 
+File1 = './Case1-1949010503.z00' #The initial value
+File2 = './Case1-1949010603.z00' #The final value
 Z0  = np.genfromtxt(File1)
 Z24 = np.genfromtxt(File2)
 
