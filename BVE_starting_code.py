@@ -165,28 +165,84 @@ Zout[0,:,:]  = Z0      #  Copy initial height field
 # step 0
 
 # TODO linear extrapolation of boundary
+def extrapolate(A_core):
+  m,n = np.shape(A_core)
+  A = np.zeros((m+2,n+2))
+  A[1:-1,1:-1] = A_core
 
-L0[0,1:-1,1:-1] = make_Laplacian(Zout[0,:,:])
+  # rows
+  A[1:-1,0] = 2*A_core[:,0] - A_core[:,1]
+  A[1:-1,-1] = 2*A_core[:,-1] - A_core[:,-2]
+
+  # cols
+  A[0,1:-1] = 2*A_core[0,:] - A_core[1,:]
+  A[-1,1:-1] = 2*A_core[-1,:] - A_core[-2,:]
+
+  # corners
+  A[0,0] = 0.5*(A[1,0]+A[0,1])
+  A[0,-1] = 0.5*(A[1,-1]+A[0,-2])
+  A[-1,0] = 0.5*(A[-1,1]+A[-2,0])
+  A[-1,-1] = 0.5*(A[-1,-2]+A[-2,-1])
+
+  return A
+
+L0[0,:,:] = extrapolate(make_Laplacian(Zout[0,:,:]))
+print(L0[0,0,:])
 J = make_Jacobian(Zout[0,:,:],L0[0,:,:])
 
 # Euler
-L0[1,:,:] = L0[0,:,:] + (J *Dt)
 Zout[1,:,:] = Zout[0,:,:]
-Zout[1,1:-1,1:-1] = Poisson_solver(J)
+Zout[1,1:-1,1:-1] = Zout[0,1:-1,1:-1] + Dt*Poisson_solver(J)
 
 # step n > 0
 
 for i in range(1,nt):
-  L0[i,1:-1,1:-1] = make_Laplacian(Zout[i-1,:,:])
-  J = make_Jacobian(Zout[1,:,:],L0[1,:,:])
+  L0[i,:,:] = L0[i-1,:,:] # save boundary
+  print(L0[i,0,:])
+  L0[i,1:-1,1:-1] = make_Laplacian(Zout[i,:,:])
+  J = make_Jacobian(Zout[i,:,:],h*L0[i,:,:]+FCOR)
+  #print(Poisson_solver(J)[5,5])
   # Leapfrog
-  L0[i+1,:,:] = L0[i-1,:,:] + (J * Dt*2)
-  Zout[i+1,:,:] = Zout[i,:,:]
-  Zout[i+1,1:-1,1:-1] = Poisson_solver(J)
+  Zout[i+1,:,:] = Zout[i,:,:] # save boundary
+  Zout[i+1,1:-1,1:-1] = Zout[i-1,1:-1,1:-1] + (Poisson_solver(J) * Dt*2)
 
 fig, ax = plt.subplots(nrows=1)
 
-ax.contour(X, Y, Zout[0,:,:], levels=14, linewidths=0.5, colors='k')
-cntr1 = ax.contourf(X, Y, Zout[-1,:,:], levels=14, cmap="RdBu_r")
+cntr0 = ax.contour(X, Y, Zout[0,:,:], levels=8, linewidths=0.5, colors='k')
+#cntr1 = ax.contourf(X, Y, Zout[-1,:,:], levels=14, cmap="RdBu_r")
+cntr1 = ax.contour(X, Y, Zout[-1,:,:], levels=8, linewidths=0.5, colors='r')
+ax.clabel(cntr1, inline=True, fontsize=10)
+ax.clabel(cntr0, inline=True, fontsize=10)
+plt.savefig("forecast.png")
 
-plt.savefig("contour.png")
+fig, ax = plt.subplots(nrows=1)
+
+cntr0 = ax.contour(X, Y, Z24[:,:], levels=8, linewidths=0.5, colors='k')
+#cntr1 = ax.contourf(X, Y, Zout[-1,:,:], levels=14, cmap="RdBu_r")
+cntr1 = ax.contour(X, Y, Zout[-1,:,:], levels=8, linewidths=0.5, colors='r')
+ax.clabel(cntr1, inline=True, fontsize=10)
+ax.clabel(cntr0, inline=True, fontsize=10)
+plt.savefig("analysis.png")
+
+fig, ax = plt.subplots(nrows=1)
+
+cntr0 = ax.contour(X, Y, Zout[-1,:,:]-Zout[0,:,:], levels=6, linewidths=0.5, colors='k')
+#cntr1 = ax.contourf(X, Y, Zout[-1,:,:], levels=14, cmap="RdBu_r")
+cntr1 = ax.contour(X, Y, Z24[:,:] - Zout[0,:,:], levels=6, linewidths=0.5, colors='r')
+ax.clabel(cntr1, inline=True, fontsize=10)
+ax.clabel(cntr0, inline=True, fontsize=10)
+plt.savefig("tendency.png")
+
+def RMSE(x_true, x):
+    return np.sqrt((x_true - x)**2)
+
+rmse_comp = RMSE(Zout[-1,:,:], Z24[:,:])
+rmse_pers = RMSE(Zout[0,:,:], Z24[:,:])
+
+print(np.mean(rmse_comp))
+print(np.mean(rmse_pers))
+
+fig, ax = plt.subplots(nrows=1)
+cntr1 = ax.contourf(X, Y, rmse_comp, levels=14, cmap="RdBu_r")
+plt.savefig("rmse.png")
+
