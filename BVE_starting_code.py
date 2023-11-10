@@ -164,7 +164,7 @@ Zout[0,:,:]  = Z0      #  Copy initial height field
 
 # step 0
 
-# TODO linear extrapolation of boundary
+# linear extrapolation of boundary
 def extrapolate(A_core):
   m,n = np.shape(A_core)
   A = np.zeros((m+2,n+2))
@@ -198,7 +198,7 @@ Zout[1,1:-1,1:-1] = Zout[0,1:-1,1:-1] + Dt*Poisson_solver(J)
 
 for i in range(1,nt):
   L0[i,:,:] = L0[i-1,:,:] # save boundary
-  print(L0[i,0,:])
+  #print(L0[i,0,:])
   L0[i,1:-1,1:-1] = make_Laplacian(Zout[i,:,:])
   J = make_Jacobian(Zout[i,:,:],h*L0[i,:,:]+FCOR)
   #print(Poisson_solver(J)[5,5])
