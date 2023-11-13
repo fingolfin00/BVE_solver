@@ -20,4 +20,4 @@ The following plot shows contour lines for the forecast at t= t0 + 24h, in red, 
 
 ![](tendency.png)
 
-Comparing the forecast RMSE with a 0-cost forecast, Z0 in place of the time dependent forecast, we unequivocally understand that the forecast skill are worst, even if of the same order of error, of the 0-cost forecast. 
+Comparing the forecast RMSE with a 0-cost forecast, Z0 in place of the time dependent forecast, we unequivocally understand that the forecast skills are worst, even if of the same order of error, of the 0-cost forecast. 
