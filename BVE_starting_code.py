@@ -188,7 +188,7 @@ def extrapolate(A_core):
 
 L0[0,:,:] = extrapolate(make_Laplacian(Zout[0,:,:]))
 print(L0[0,0,:])
-J = make_Jacobian(Zout[0,:,:],L0[0,:,:])
+J = make_Jacobian(Zout[0,:,:],h*L0[0,:,:]+FOCR)
 
 # Euler
 Zout[1,:,:] = Zout[0,:,:]
