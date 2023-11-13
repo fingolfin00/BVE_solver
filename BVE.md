@@ -6,10 +6,7 @@ The Leapfrog method and a linear extrapolation of the boundaries for the Laplaci
 
 The numerical integration proceeds as follow. 
 The initial-conditions file, consisting of data for geopotential eight in a 19x16 grid, is read as the starting point of the forecast. From this intial values of Z we compute the Laplacin with the "make_Laplacian" function that reads the Z field and return a 17x15, thus exclunding boundaries. Boundaries are then computed with the "extrapolate" function that extrapolate linearly the boundaries according to:
-\[
-X_{i,0}=2*X_{i,1}-X_{i,2} ,
-X_{i,M}=2*X_{i,M-1}-X_{i,M-2} ;
-\]
+\[X_{i,0}=2*X_{i,1}-X_{i,2} , X_{i,M}=2*X_{i,M-1}-X_{i,M-2} ;\]
 and analogous for intial and finale row. The four corners are then updated.
 
 
