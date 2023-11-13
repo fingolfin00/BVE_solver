@@ -6,8 +6,10 @@ The Leapfrog method and a linear extrapolation of the boundaries for the Laplaci
 
 The numerical integration proceeds as follow. 
 The initial-conditions file, consisting of data for geopotential eight in a 19x16 grid, is read as the starting point of the forecast. From this intial values of Z we compute the Laplacin with the "make_Laplacian" function that reads the Z field and return a 17x15, thus exclunding boundaries. Boundaries are then computed with the "extrapolate" function that extrapolate linearly the boundaries according to:
-\[X_{i,0}=2*X_{i,1}-X_{i,2} , X_{i,M}=2*X_{i,M-1}-X_{i,M-2} ;\]
-and analogous for intial and finale row. The four corners are then updated.
+\[X_{i,0}=2*X_{i,1}-X_{i,2} ,
+X_{i,M}=2*X_{i,M-1}-X_{i,M-2} ;\]
+and similarly for intial and final row. The four corners are then updated.
+At this point we can derive J from Z and the absolute vorticity,\[h*L+f], with the "make_Jacobian" function. Then, the "Poisson_solver" function reads the Jacobian and gives the tendecy for Z. The first time step is integrated with according to the Euler method. The following time steps, instead z is updated with a leapfrog method keeping Z and J fixed at the boundaries. 
 
 
 The following plot shows contour lines for the forecast at t= t0 + 24h, in red, compared to t0, in black. 
