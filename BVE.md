@@ -11,10 +11,10 @@ X_{i,M}=2*X_{i,M-1}-X_{i,M-2} ;\]
 and similarly for intial and final row. The four corners are then updated.
 At this point we can derive J from Z and the absolute vorticity,\[h*L+f], with the "make_Jacobian" function. Then, the "Poisson_solver" function reads the Jacobian and gives the tendecy for Z. The first time step is integrated with according to the Euler method. The following time steps, instead z is updated with a leapfrog method keeping Z and J fixed at the boundaries. 
 
-## Immagini da rifare con un titolo, magari farne anche una forecast vs Z24 
+
 The following plot shows contour lines for the forecast at t= t0 + 24h, in red, compared to t0, in black. 
 
-![](forecast.png)
+![Figure 1](forecast.png)
 
 ![](analysis.png)
 
