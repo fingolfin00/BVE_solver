@@ -15,6 +15,7 @@ DtHours = .5   #  Timestep in hours.
 ################################################### 
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 
 ###################################################
 ##############DEFINE FUNCTIONS#####################
@@ -213,6 +214,16 @@ cntr0 = ax.contour(X, Y, Zout[0,:,:], levels=8, linewidths=0.5, colors='k')
 cntr1 = ax.contour(X, Y, Zout[-1,:,:], levels=8, linewidths=0.5, colors='r')
 ax.clabel(cntr1, inline=True, fontsize=10)
 ax.clabel(cntr0, inline=True, fontsize=10)
+labels = ['IC', 'forecast']
+
+artist = cntr0.legend_elements()[0]
+artist.append(cntr1.legend_elements()[0])
+pers_label = mpatches.Patch(color='k', label='persistence', fill=False, linewidth=0.5)
+forecast_label = mpatches.Patch(color='r', label='forecast', fill=False, linewidth=0.5)
+plt.legend(handles=[pers_label, forecast_label], loc='lower left')
+plt.tight_layout()
+fig.suptitle("Figure 1: persistence and forecast", fontsize=8)
+
 plt.savefig("forecast.png")
 
 fig, ax = plt.subplots(nrows=1)
@@ -222,6 +233,11 @@ cntr0 = ax.contour(X, Y, Z24[:,:], levels=8, linewidths=0.5, colors='k')
 cntr1 = ax.contour(X, Y, Zout[-1,:,:], levels=8, linewidths=0.5, colors='r')
 ax.clabel(cntr1, inline=True, fontsize=10)
 ax.clabel(cntr0, inline=True, fontsize=10)
+obs_label = mpatches.Patch(color='k', label='observation', fill=False, linewidth=0.5)
+plt.legend(handles=[obs_label, forecast_label], loc='lower left')
+plt.tight_layout()
+fig.suptitle("Figure 2: observation and forecast", fontsize=8)
+
 plt.savefig("analysis.png")
 
 fig, ax = plt.subplots(nrows=1)
@@ -231,6 +247,12 @@ cntr0 = ax.contour(X, Y, Zout[-1,:,:]-Zout[0,:,:], levels=6, linewidths=0.5, col
 cntr1 = ax.contour(X, Y, Z24[:,:] - Zout[0,:,:], levels=6, linewidths=0.5, colors='r')
 ax.clabel(cntr1, inline=True, fontsize=10)
 ax.clabel(cntr0, inline=True, fontsize=10)
+obs_tend_label = mpatches.Patch(color='k', label='observed tendency', fill=False, linewidth=0.5)
+forecast_tend_label = mpatches.Patch(color='r', label='forecast tendency', fill=False, linewidth=0.5)
+plt.legend(handles=[obs_tend_label, forecast_tend_label], loc='lower right')
+plt.tight_layout()
+fig.suptitle("Figure 3: observation and forecast tendencies", fontsize=8)
+
 plt.savefig("tendency.png")
 
 def RMSE(x_true, x):
