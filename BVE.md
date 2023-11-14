@@ -28,7 +28,7 @@ Comparing the forecast RMSE with a 0-cost forecast, Z0 persistency, we unequivoc
 ## Discussion
 Given that, as discussed during the lecture, the are multiple ways to improve the model and reduce the error, we discuss here 3 different proposals, even if in principle are not the dominant factor for the discrepancies with the observed state.
 
-### Boundary Condition
+### Boundary Conditions
 We noted that the system is sensitive to different Laplacian boundary condition. The first attempt,as discussed before, has been perfomed by interpolating lineary with to closest grid points in the same row/column. This approach, despite its semplicity, is clearly overestimating the dependency over these two closest grid points in the same row/column while negleting the interaction with closest points over different columns/rows. We therefore refined the boundary extrapolation taking into account first and second closest points. For example for 0-column:
 \[X_{i,0}=1/3*X_{i,1}+1/3X_{i-1,0}+1/3X_{i+1,0} +1/6X_{i-1,1} +1/3X_{i+1,1}  ;\]
 
