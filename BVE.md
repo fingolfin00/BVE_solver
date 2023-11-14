@@ -15,10 +15,12 @@ At this point we can derive J from Z and the absolute vorticity,\[h*L+f], with t
 The following plot shows contour lines for the forecast at t= t0 + 24h, in red, compared to t0, in black. 
 
 ![Figure 1](forecast.png) 
-*Figure 1*
+*Figure 1: comparison between forecast (red) and Z0 persistency (black)*
 
 ![](analysis.png)
+*Figure 2: comparison between forecast (red) and Z24 observation (black)*
 
 ![](tendency.png)
+*Figure 1: comparison between forecast tendency (red) and observed (black)*
 
 Comparing the forecast RMSE with a 0-cost forecast, Z0 in place of the time dependent forecast, we unequivocally understand that the forecast skills are worst, even if of the same order of error, of the 0-cost forecast. 
