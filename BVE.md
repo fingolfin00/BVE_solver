@@ -14,7 +14,8 @@ At this point we can derive J from Z and the absolute vorticity,\[h*L+f], with t
 
 The following plot shows contour lines for the forecast at t= t0 + 24h, in red, compared to t0, in black. 
 
-![Figure 1](forecast.png) *Figure 1*
+![Figure 1](forecast.png) 
+*Figure 1*
 
 ![](analysis.png)
 
