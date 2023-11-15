@@ -14,7 +14,7 @@ The provided initial conditions consist of the field of Z500 derived from observ
 The numerical integration proceeds as follows:
 
 1. The initial-conditions file, consisting of data for geopotential eight in a 19x16 grid, is read as the starting point of the forecast.
-2. From this intial values of Z we compute the Laplacian with the "make_Laplacian" function that reads the Z field and return a 17x15, thus excluding boundaries.
+2. From this intial values of Z we compute the Laplacian with the "make_Laplacian" function that reads the Z field and return a 17x15 grid, thus excluding boundaries.
 3. Boundaries are then computed with the "extrapolate" function that extrapolate linearly the boundaries according to:
 $$
 [X_{i,0}=2*X_{i,1}-X_{i,2} ,
