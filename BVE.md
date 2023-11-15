@@ -35,17 +35,11 @@ The first time step is integrated with according to the Euler method. The follow
 The following plot shows contour lines for the forecast at t= t0 + 24h compared to t0 (Fig.1) and to the observed state after 24 hours (Fig.2). Fig.3 compares the forecast tendency with the observed one. 
 
 
-![Figure 1](forecast.png)
+![comparison between forecast (red) and Z0 persistency (black)](forecast.png)
 
-*Figure 1: comparison between forecast (red) and Z0 persistency (black)*
+![comparison between forecast (red) and Z24 observation (black)](analysis.png)
 
-![Figure 2](analysis.png)
-
-*Figure 2: comparison between forecast (red) and Z24 observation (black)*
-
-![Figure 3](tendency.png)
-
-*Figure 3: comparison between forecast tendency (red) and observed (black)*
+![comparison between forecast tendency (red) and observed (black)](tendency.png)
 
 The forecast reaches its best skill in predicting the tendency close to the cyclone center, while largest errors are found close to the boundary.
 Comparing the forecast RMSE with a 0-cost forecast, Z0 persistency, we unequivocally understand that the forecast skills are worst, even if of the same order of error, of the 0-cost forecast (forecast RMSE of the order of 74 vs persistence error of the order of 61).
@@ -54,15 +48,13 @@ Comparing the forecast RMSE with a 0-cost forecast, Z0 persistency, we unequivoc
 Given that, as discussed during the lecture, the are multiple ways to improve the model and reduce the error, we discuss here 3 different proposals, even if in principle are not the dominant factor for the discrepancies with the observed state.
 
 ### Boundary Conditions
-We noted that the system is sensitive to different Laplacian boundary condition. The first attempt,as discussed before, has been perfomed by interpolating lineary with to closest grid points in the same row/column. This approach, despite its semplicity, is clearly overestimating the dependency over these two closest grid points in the same row/column while negleting the interaction with closest points over different columns/rows. We therefore refined the boundary extrapolation taking into account first and second closest points. For example for 0-column:
+We noted that the system is sensitive to different Laplacian boundary condition. The first attempt,as discussed before, has been performed by interpolating linearly with to closest grid points in the same row/column. This approach, despite its simplicity, is clearly overestimating the dependency over these two closest grid points in the same row/column while neglecting the interaction with closest points over different columns/rows. We therefore refined the boundary extrapolation taking into account first and second closest points. For example for 0-column:
 $$ 
 [X_{i,0}=1/3*X_{i,1}+1/3X_{i-1,0}+1/3X_{i+1,0} +1/6X_{i-1,1} +1/3X_{i+1,1}  ;]
 $$ 
 With this approach we were able to reduce the RMSE by 3 points. How can be observed in Fig.4 (compare with Fig.3) the improvements is confined mainly to the regions close to the boundary, as expected.
 
-![](tendency1.png) 
-
-*Figure 4: comparison between forecast tendency (red) and observed (black) with the closest-points boundary scheme*
+![comparison between forecast tendency (red) and observed (black) with the closest-points boundary scheme](tendency1.png)
 
 ### Baroclinic conditions and vertical resolution
 
