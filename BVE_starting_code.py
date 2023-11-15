@@ -195,6 +195,8 @@ J = make_Jacobian(Zout[0,:,:],h*L0[0,:,:]+FCOR)
 Zout[1,:,:] = Zout[0,:,:]
 Zout[1,1:-1,1:-1] = Zout[0,1:-1,1:-1] + Dt*Poisson_solver(J)
 
+Zout_unfiltered = Zout
+
 # step n > 0
 
 for i in range(1,nt):
@@ -205,7 +207,9 @@ for i in range(1,nt):
   #print(Poisson_solver(J)[5,5])
   # Leapfrog
   Zout[i+1,:,:] = Zout[i,:,:] # save boundary
-  Zout[i+1,1:-1,1:-1] = Zout[i-1,1:-1,1:-1] + (Poisson_solver(J) * Dt*2)
+  Zout_unfiltered[i+1,1:-1,1:-1] = Zout[i-1,1:-1,1:-1] + (Poisson_solver(J) * Dt*2)
+  # Robert-Asselin
+  Zout[i+1,1:-1,1:-1] = 0.1*Zout[i+1,1:-1,1:-1] + 0.9*Zout_unfiltered[i+1,1:-1,1:-1]
 
 fig, ax = plt.subplots(nrows=1)
 
