@@ -30,6 +30,7 @@ The first time step is integrated with according to the Euler method. The follow
 ## Results
 
 The following plot shows contour lines for the forecast at t= t0 + 24h compared to t0 (Fig.1) and to the observed state after 24 hours (Fig.2). Fig.3 compares the forecast tendency with the observed one. 
+The forecast reaches its best skill in predicting the tendecy close to the cyclonic center, while close largest error are found close to the boundary.
 
 ![Figure 1](forecast.png)
 
