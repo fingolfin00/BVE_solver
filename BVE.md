@@ -13,8 +13,7 @@ The geopotential height of Z = 500 hPa (in the following called Z500), in the mi
 
 We integrate the system which describes the geopotential height Z over the rectangular domain, a polar stereographic projection that includes the North Pole up to about 10N, corresponding roughly to North America, every half an hour, for 24 hours.
 
-The provided initial conditions consist of the field of Z500 derived from observations for the 5th of January 1949, representing t0. The space and time increments in the finite difference equations satisfy the Courant–Friedrichs–Lewy condition for the computational stability of the equation governing the system.
-
+The provided initial conditions consist of the field of Z500 derived from observations for the 5th of January 1949.
 The numerical integration proceeds as follows:
 
 1. The initial-conditions file, consisting of data for geopotential eight in a 19x16 grid, is read as the starting point of the forecast.
