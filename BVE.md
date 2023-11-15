@@ -55,7 +55,8 @@ We noted that the system is sensitive to different Laplacian boundary condition.
 \[X_{i,0}=1/3*X_{i,1}+1/3X_{i-1,0}+1/3X_{i+1,0} +1/6X_{i-1,1} +1/3X_{i+1,1}  ;\]
 With this approach we were able to reduce the RMSE by 3 points. How can be observed in Fig.4 (compare with Fig.3) the improvements is confined mainly to the regions close to the boundary, as expected.
    
-![Figure 1](tendency1.png) 
+![](tendency1.png) 
+
 *Figure 4: comparison between forecast tendency (red) and observed (black) with the closest-points boundary scheme*
 
 ### Baroclinic conditions and vertical resolution
